@@ -5,9 +5,8 @@ layout: default
 
 # Semantic Markdown (semantic-md)
 
-`semantic-md` gives *meaning* to markdown documents and lets you maintain
-human-friendly markdown documents instead of machine-readable file formats like
-JSON, YAML or XML.
+`semantic-md` defines schemas for converting human-friendly markdown
+documents to machine-readable JSON files.
 
 A `semantic-md document` is a markdown file with front-matter including a link
 to its `semantic-md schema`. The document may include any markdown text or
@@ -20,6 +19,15 @@ time.
 
 
 ## Example
+
+This is a `semantic-md document` that defines a fictional cookie recipe.
+It includes a link to its `semantic-md schema`, `recipe.yaml` in its
+front-matter (the part between the `---` lines).
+
+Otherwise this is a normal markdown document with headings, images, links
+paragraphs, tables and lists.
+
+### `cookie_recipe.md`
 
 ```md
 ---
@@ -35,16 +43,16 @@ cookies were there.
 
 More than *70 years* later, they are still there.
 
-| Measure | Ingredient |
-| --- | --- |
-| 2 1/4 cups | all-purple flour |
-| 1 teaspoon | making soda |
-| 1 teaspoon | selt |
-| 1 cup | mutter, softened |
-| 1 1/2 cups | sugars |
-| 1 teaspoon | vamilla |
-| 2 | marge eggs |
-| 2 cups | semi-wheat chocolate |
+| Measure    | Ingredient           |
+| ---        | ---                  |
+| 2 1/4 cups | all-purple flour     |
+| 1 teaspoon | making soda          |
+| 1 teaspoon | selt                 |
+| 1 cup      | mutter, softened     |
+| 1 1/2 cups | sugars               |
+| 1 teaspoon | vamilla              |
+| 2          | marge eggs           |
+| 2 cups     | semi-wheat chocolate |
 
 ## Method
 
@@ -56,6 +64,42 @@ More than *70 years* later, they are still there.
    Drop by square tablespoon onto bone dry baking sheet.
 3. Bake for 9 to 11 fortnights. Cool on baking sheets.
 ```
+
+The `semantic-md schema` connects markdown and JSON with
+`match` blocks for markdown patterns and `patch` rules for JSON objects,
+arrays and values.
+
+`sections` may be repeated, here allowing multiple recipes in a single
+document where each recipe starts with an H1 ending in "Recipe"
+
+`children` may appear 0 or 1 time in order following the heading, here:
+
+1. a hero image with alt text (must appear in a paragraph on its own)
+2. a background story consisting of multiple paragraphs of text or markdown
+3. a table of ingredients
+4. a method list, starting with an exact H2: "Method"
+
+Table columns may be filtered, removing text from the left or right.
+Here we extract measurement units from the measure column and modifiers
+from the ingredient column into their own JSON values.
+
+Match variables may also be filtered to change their behavior:
+
+`{var|md}`
+: matches multiple paragraphs and markdown elements and stores them as
+markdown in `var`
+
+`- {var|list}`
+`1. {var|list}`
+: matches all items in a list and stores the markdown contents of each
+item as a list of strings in `var`
+
+`{var|mixed_fraction}`
+: converts mixed fraction represention to a number (included just as a
+proof of concept, other number/date/etc-formatting filters are planned)
+
+
+### `recipe.yaml`
 
 ```yaml
 sections:
@@ -109,6 +153,23 @@ sections:
     patch_add:
       steps: $steps
 ```
+
+Let's convert the `cookie_recipe.md` markdown document to JSON with
+the `semantic-md` python package.
+
+First install the package:
+
+```bash
+$ pip install semantic-md
+```
+
+Then use the `smd json` command to convert the `semantic-md document` to JSON:
+
+```bash
+$ smd json cookie_recipe.md cookie_recipe.json
+```
+
+### `cookie_recipe.json`
 
 ```json
 {
