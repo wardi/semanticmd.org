@@ -16,13 +16,15 @@ to its `semantic-md schema`. The document may include any markdown text or
 elements allowed by the schema.
 
 A `semantic-md schema` is a yaml file mapping markdown text and element
-structures to JSON objects, arrays and values. Schemas are typically
-reused across many documents and may be versioned, adapting to changes over
+structures to JSON objects, arrays and values. Schemas may be
+reused across many documents and versioned, adapting to changes over
 time.
 
-Project home page: <https://github.com/semantic-md/semantic-md>
+Project home page
+: <https://github.com/semantic-md/semantic-md>
 
-Documentation: coming soon
+Documentation
+: coming soon
 
 
 ## Example
@@ -70,8 +72,8 @@ elements normally, including:
 It connects markdown and JSON with `match` blocks for markdown patterns
 and `patch` rules for JSON objects, arrays and values.
 
-`sections:` may be repeated, here allowing multiple recipes in a single
-document.
+`sections:` rules may match multiple times, here this allows many
+recipes in a single document.
 
 `heading_match:` allows elements under a heading to be grouped into the
 same JSON object. This rule will only match an H1 ending in `Recipe`.
@@ -139,6 +141,10 @@ proof of concept, other number/date/etc-formatting filters are planned)
 
 </div>
 </div>
+
+
+## Try it Yourself
+
 
 <div class="example" markdown="1">
 <div class="example-prose" markdown="1">
