@@ -3,12 +3,15 @@
 layout: default
 ---
 
+<div class="example" markdown="1">
+<div class="example-prose" markdown="1">
+
 # Semantic Markdown (semantic-md)
 
 `semantic-md` defines schemas for converting human-friendly markdown
 documents to machine-readable JSON files.
 
-A `semantic-md document` is a markdown file with front-matter including a link
+A `semantic-md document` is a markdown file with a link
 to its `semantic-md schema`. The document may include any markdown text or
 elements allowed by the schema.
 
@@ -20,12 +23,33 @@ time.
 
 ## Example
 
-This is a `semantic-md document` that defines a fictional cookie recipe.
-It includes a link to its `semantic-md schema`, `recipe.yaml` in its
-front-matter (the part between the `---` lines).
 
-Otherwise this is a normal markdown document with headings, images, links
+`cookie_recipe.md` is a `semantic-md document` that defines a fictional cookie recipe.
+
+It includes a link to its `semantic-md schema`, `recipe.yaml` in its
+front-matter
+
+```yaml
+---
+semantic-md: recipe.yaml
+---
+```
+
+Otherwise, this is a normal markdown document that:
+
+- uses headings to structure content
+- has a prominent hero image with alt text
+- includes free-form descriptive paragraphs with embedded links and emphasis
+
+
+
+, images, links
 paragraphs, tables and lists.
+
+The document reads naturally as a recipe description
+
+</div>
+<div class="example-code" markdown="1">
 
 ### `cookie_recipe.md`
 
@@ -34,7 +58,7 @@ paragraphs, tables and lists.
 semantic-md: recipe.yaml
 ---
 
-# Mole House Cookie Recipe
+# Fictional Mole House Cookie Recipe
 
 ![Tasty cookies](/images/cookies.jpg)
 
@@ -64,6 +88,12 @@ More than *70 years* later, they are still there.
    Drop by square tablespoon onto bone dry baking sheet.
 3. Bake for 9 to 11 fortnights. Cool on baking sheets.
 ```
+
+</div>
+</div>
+
+<div class="example" markdown="1">
+<div class="example-prose" markdown="1">
 
 The `semantic-md schema` connects markdown and JSON with
 `match` blocks for markdown patterns and `patch` rules for JSON objects,
@@ -98,6 +128,8 @@ item as a list of strings in `var`
 : converts mixed fraction represention to a number (included just as a
 proof of concept, other number/date/etc-formatting filters are planned)
 
+</div>
+<div class="example-code" markdown="1">
 
 ### `recipe.yaml`
 
@@ -154,20 +186,39 @@ sections:
       steps: $steps
 ```
 
-Let's convert the `cookie_recipe.md` markdown document to JSON with
-the `semantic-md` python package.
+</div>
+</div>
 
-First install the package:
+<div class="example" markdown="1">
+<div class="example-prose" markdown="1">
+
+Let's convert the `cookie_recipe.md` markdown document to JSON with
+the `semantic-md` python package.  First install the package:
+
+</div>
+<div class="example-code" markdown="1">
 
 ```bash
 $ pip install semantic-md
 ```
 
+</div>
+</div>
+
+<div class="example" markdown="1">
+<div class="example-prose" markdown="1">
+
 Then use the `smd json` command to convert the `semantic-md document` to JSON:
+
+</div>
+<div class="example-code" markdown="1">
 
 ```bash
 $ smd json cookie_recipe.md cookie_recipe.json
 ```
+
+</div>
+</div>
 
 ### `cookie_recipe.json`
 
@@ -175,7 +226,7 @@ $ smd json cookie_recipe.md cookie_recipe.json
 {
   "recipes": [
     {
-      "name": "Mole House Cookie",
+      "name": "Fictional Mole House Cookie",
       "image_url": "/images/cookies.jpg",
       "image_alt": "Tasty cookies",
       "background_story": "It started at the beginning. [Mole House Restaurant](https://example.com)\ncookies were there.\n\nMore than *70 years* later, they are still there.\n",
