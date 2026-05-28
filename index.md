@@ -24,10 +24,11 @@ time.
 ## Example
 
 
-`cookie_recipe.md` is a `semantic-md document` that defines a fictional cookie recipe.
+`cookie_recipe.md` is a `semantic-md document` that defines a fictional
+cookie recipe.
 
 It includes a link to its `semantic-md schema`, `recipe.yaml` in its
-front-matter
+front-matter:
 
 ```yaml
 ---
@@ -35,18 +36,16 @@ semantic-md: recipe.yaml
 ---
 ```
 
-Otherwise, this is a normal markdown document that:
+Otherwise, this is an unremarkable document that uses markdown
+elements naturally, including:
 
-- uses headings to structure content
-- has a prominent hero image with alt text
-- includes free-form descriptive paragraphs with embedded links and emphasis
+- headings to structure content
+- a prominent hero image with alt text
+- free-form descriptive paragraphs
+- embedded links and emphasis
+- ingredients in a table with measurements
+- method steps as a numbered list
 
-
-
-, images, links
-paragraphs, tables and lists.
-
-The document reads naturally as a recipe description
 
 </div>
 <div class="example-code" markdown="1">
@@ -65,7 +64,7 @@ semantic-md: recipe.yaml
 It started at the beginning. [Mole House Restaurant](https://example.com)
 cookies were there.
 
-More than *70 years* later, they are still there.
+Long background stories are important for recipe page rank.
 
 | Measure    | Ingredient           |
 | ---        | ---                  |
