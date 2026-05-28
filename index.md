@@ -20,6 +20,10 @@ structures to JSON objects, arrays and values. Schemas are typically
 reused across many documents and may be versioned, adapting to changes over
 time.
 
+Project home page: <https://github.com/semantic-md/semantic-md>
+
+Documentation: coming soon
+
 
 ## Example
 
@@ -37,7 +41,7 @@ semantic-md: recipe.yaml
 ```
 
 Otherwise, this is an unremarkable document that uses markdown
-elements naturally, including:
+elements normally, including:
 
 - headings to structure content
 - a prominent hero image with alt text
@@ -62,24 +66,24 @@ elements naturally, including:
 <div class="example" markdown="1">
 <div class="example-prose" markdown="1">
 
-The `semantic-md schema` connects markdown and JSON with
-`match` blocks for markdown patterns and `patch` rules for JSON objects,
-arrays and values.
+`recipe.yaml` is the `semantic-md schema` for our `cookie_recipe.md`.
+It connects markdown and JSON with `match` blocks for markdown patterns
+and `patch` rules for JSON objects, arrays and values.
 
-`sections` may be repeated, here allowing multiple recipes in a single
-document where each recipe starts with an H1 ending in `Recipe`.
+`sections:` may be repeated, here allowing multiple recipes in a single
+document.
 
-`heading_match` allows matching elements following a heading to be
-grouped into the same JSON object.
+`heading_match:` allows elements under a heading to be grouped into the
+same JSON object. This rule will only match an H1 ending in `Recipe`.
 
-`patch_path` is a
+`patch_path:` is a
 [JSON Pointer](https://datatracker.ietf.org/doc/html/rfc6901)
 set to `recipes/-`. This creates a new object and appends it to a
-`recipes` list at the root. This new object is set as the default path
+`recipes` list at the root. The new object is set as the default path
 for all values matched under this recipe.
 
-`{recipe_name}` is captured from the H1 then stored under `recipes/𝑁/name`
-using `patch_add`.
+`patch_add:` takes the captured `{recipe_name}` from the H1 and stores it as
+`recipes/𝑁/name: $recipe_name`.
 
 If instead of a list we want to store recipes with their names as a key
 we would use:
@@ -88,24 +92,24 @@ we would use:
 patch_path: recipes/$recipe_name
 ```
 
-`children`, unlike `sections` may appear only once, and must be
-in order following the heading, here:
+`children:` rules, unlike `sections:` rules, may appear only once and must appear
+in order following the heading, here recipies may have 0 or 1 of:
 
 1. a hero image with alt text (must appear in a paragraph on its own)
 2. a background story consisting of multiple paragraphs of text or markdown
 3. a table of ingredients
-4. a method list, starting with an exact H2: "Method"
+4. a method list, starting with an exact H2: `Method`
 
-`table_match` will only match tables with the headings given:
+`table_match:` will only match tables with the headings given:
 
 ```md
 | Measure | Ingredient |
 ```
 
-`row_patch_path` set to `ingredients/-` will append a new object to
+`row_patch_path:` set to `ingredients/-` will append a new object to
 `recipes/𝑁/ingredients` for each row.
 
-`row_submatch` allows filtering columns `$1` and `$2` before storing
+`row_submatch:` allows filtering columns `$1` and `$2` before storing
 values. Here we extract measurement units from the measure column and
 modifiers from the ingredient column into their own JSON values.
 
@@ -116,7 +120,6 @@ parsing behavior:
 : matches multiple paragraphs and markdown elements and stores them as
 markdown in `var`
 
-`- {var|list}`
 `1. {var|list}`
 : matches all items in a list and stores the markdown contents of each
 item as a list of strings in `var`
@@ -170,8 +173,40 @@ $ smd json cookie_recipe.md cookie_recipe.json
 </div>
 </div>
 
+<div class="example" markdown="1">
+<div class="example-prose" markdown="1">
+
+If no errors are found the JSON output will be saved in `cookie_recipe.json`.
+
+Each recipe is stored in an object under `recipes`.
+
+All background story paragraphs are collected into a single `background_story`
+markdown string value.
+
+Ingredients are separated into:
+
+`measure`
+: a normalized version of the measuring tool (if present)
+
+`count`
+: a numeric version of the mixed fraction amount
+
+`modifier`
+: an ingredient modifier (if present)
+
+`ingredient`
+: the base ingredient
+
+Method steps are stored as a list of strings in `steps`.
+
+</div>
+<div class="example-code" markdown="1">
+
 ### `cookie_recipe.json`
 
 ```json
 {% include_relative example/cookie_recipe.json %}
 ```
+
+</div>
+</div>

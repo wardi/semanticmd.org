@@ -4,7 +4,7 @@ semantic-md: recipe.yaml
 
 # Fictional Mole House Cookie Recipe
 
-![Tasty cookies](/images/cookies.jpg)
+![Fictional cookies](/images/cookies.jpg)
 
 It started at the beginning. [Mole House Restaurant](https://example.com)
 cookies were there.
