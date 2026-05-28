@@ -6,6 +6,13 @@
   <title>{% if page.title %}{{ page.title }} - {% endif %}{{ site.title }}</title>
 
   <style>
+    @font-face {
+      font-family: "Fraunces";
+      font-style: normal;
+      font-weight: 700 800;
+      font-display: swap;
+      src: url("{{ '/assets/fonts/fraunces-latin.woff2' | relative_url }}") format("woff2");
+    }
     :root {
       --bg: #ffffff;
       --bg-secondary: #eeeeee;
@@ -35,6 +42,7 @@
       --focusOutline: hsla(214, 100%, 85%, 1);
       --content-max: 75rem;
       --prose-max: 38rem;
+      --font-display: Fraunces, Georgia, "Times New Roman", serif;
     }
 
     @media (prefers-color-scheme: dark) {
@@ -256,7 +264,11 @@
       max-width: none;
     }
     h1 {
+      font-family: var(--font-display);
       font-size: 170%;
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
     }
     footer {
       margin-bottom: 1rem;
