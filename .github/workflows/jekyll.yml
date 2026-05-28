@@ -46,6 +46,8 @@ jobs:
       - name: Build with Jekyll
         # Outputs to the './_site' directory by default
         run: bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
+      - name: Copy static version of example/cookie_recipe.md
+        run: cp example/cookie_recipe.md _site/example/cookie_recipe.md
         env:
           JEKYLL_ENV: production
       - name: Upload artifact
