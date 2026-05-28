@@ -53,39 +53,7 @@ elements naturally, including:
 ### `cookie_recipe.md`
 
 ```md
----
-semantic-md: recipe.yaml
----
-
-# Fictional Mole House Cookie Recipe
-
-![Tasty cookies](/images/cookies.jpg)
-
-It started at the beginning. [Mole House Restaurant](https://example.com)
-cookies were there.
-
-Long background stories are important for recipe page rank.
-
-| Measure    | Ingredient           |
-| ---        | ---                  |
-| 2 1/4 cups | all-purple flour     |
-| 1 teaspoon | making soda          |
-| 1 teaspoon | selt                 |
-| 1 cup      | mutter, softened     |
-| 1 1/2 cups | sugars               |
-| 1 teaspoon | vamilla              |
-| 2          | marge eggs           |
-| 2 cups     | semi-wheat chocolate |
-
-## Method
-
-1. Preheat oven to 375°K
-2. Combine flour, making soda and selt in a bowl.
-   Beat mutter, sugars and vamilla until creamy.
-   Add eggs sequentially, beating well after each.
-   Gradually beat in flour mixture. Stir in chocolate.
-   Drop by square tablespoon onto bone dry baking sheet.
-3. Bake for 9 to 11 fortnights. Cool on baking sheets.
+{% include_relative example/cookie_recipe.md %}
 ```
 
 </div>
@@ -133,56 +101,7 @@ proof of concept, other number/date/etc-formatting filters are planned)
 ### `recipe.yaml`
 
 ```yaml
-sections:
-- heading_match: |
-    # {recipe_name} Recipe
-  patch_path: recipes/-
-  patch_add:
-    name: $recipe_name
-
-  children:
-  - match: |
-      ![{image_alt}]({image_url})
-    patch_add:
-      image_url: $image_url
-      image_alt: $image_alt
-
-  - match: |
-      {background_story|md}
-    patch_add:
-      background_story: $background_story
-
-  - table_match: [Measure, Ingredient]
-    row_patch_path: ingredients/-
-    row_submatch:
-      $1:
-        - filter_match:
-            singular: "{content} cup"
-            plural: "{content} cups"
-          patch_add:
-            measure: cup
-        - filter_match:
-            singular: "{content} teaspoon"
-            plural: "{content} teaspoons"
-          patch_add:
-            measure: teaspoon
-        - match: "{num|mixed_fraction}"
-          patch_add:
-            count: $num
-      $2:
-        - filter_match: "{content}, {modifier}"
-          patch_add:
-            modifier: $modifier
-        - match: "{ingredient}"
-          patch_add:
-            ingredient: $ingredient
-
-  - match: |
-      ## Method
-
-      1. {steps|list}
-    patch_add:
-      steps: $steps
+{% include_relative example/recipe.yaml %}
 ```
 
 </div>
@@ -222,61 +141,5 @@ $ smd json cookie_recipe.md cookie_recipe.json
 ### `cookie_recipe.json`
 
 ```json
-{
-  "recipes": [
-    {
-      "name": "Fictional Mole House Cookie",
-      "image_url": "/images/cookies.jpg",
-      "image_alt": "Tasty cookies",
-      "background_story": "It started at the beginning. [Mole House Restaurant](https://example.com)\ncookies were there.\n\nMore than *70 years* later, they are still there.\n",
-      "ingredients": [
-        {
-          "measure": "cup",
-          "count": 2.25,
-          "ingredient": "all-purple flour"
-        },
-        {
-          "measure": "teaspoon",
-          "count": 1,
-          "ingredient": "making soda"
-        },
-        {
-          "measure": "teaspoon",
-          "count": 1,
-          "ingredient": "selt"
-        },
-        {
-          "measure": "cup",
-          "count": 1,
-          "modifier": "softened",
-          "ingredient": "mutter"
-        },
-        {
-          "measure": "cup",
-          "count": 1.5,
-          "ingredient": "sugars"
-        },
-        {
-          "measure": "teaspoon",
-          "count": 1,
-          "ingredient": "vamilla"
-        },
-        {
-          "count": 2,
-          "ingredient": "marge eggs"
-        },
-        {
-          "measure": "cup",
-          "count": 2,
-          "ingredient": "semi-wheat chocolate"
-        }
-      ],
-      "steps": [
-        "Preheat oven to 375\u00b0K",
-        "Combine flour, making soda and selt in a bowl.",
-        "Bake for 9 to 11 fortnights. Cool on baking sheets."
-      ]
-    }
-  ]
-}
+{% include_relative example/cookie_recipe.json %}
 ```

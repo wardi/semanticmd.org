@@ -1,0 +1,50 @@
+sections:
+- heading_match: |
+    # {recipe_name} Recipe
+  patch_path: recipes/-
+  patch_add:
+    name: $recipe_name
+
+  children:
+  - match: |
+      ![{image_alt}]({image_url})
+    patch_add:
+      image_url: $image_url
+      image_alt: $image_alt
+
+  - match: |
+      {background_story|md}
+    patch_add:
+      background_story: $background_story
+
+  - table_match: [Measure, Ingredient]
+    row_patch_path: ingredients/-
+    row_submatch:
+      $1:
+        - filter_match:
+            singular: "{content} cup"
+            plural: "{content} cups"
+          patch_add:
+            measure: cup
+        - filter_match:
+            singular: "{content} teaspoon"
+            plural: "{content} teaspoons"
+          patch_add:
+            measure: teaspoon
+        - match: "{num|mixed_fraction}"
+          patch_add:
+            count: $num
+      $2:
+        - filter_match: "{content}, {modifier}"
+          patch_add:
+            modifier: $modifier
+        - match: "{ingredient}"
+          patch_add:
+            ingredient: $ingredient
+
+  - match: |
+      ## Method
+
+      1. {steps|list}
+    patch_add:
+      steps: $steps

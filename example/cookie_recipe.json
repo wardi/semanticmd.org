@@ -1,0 +1,57 @@
+{
+  "recipes": [
+    {
+      "name": "Fictional Mole House Cookie",
+      "image_url": "/images/cookies.jpg",
+      "image_alt": "Tasty cookies",
+      "background_story": "It started at the beginning. [Mole House Restaurant](https://example.com)\ncookies were there.\n\nMore than *70 years* later, they are still there.\n",
+      "ingredients": [
+        {
+          "measure": "cup",
+          "count": 2.25,
+          "ingredient": "all-purple flour"
+        },
+        {
+          "measure": "teaspoon",
+          "count": 1,
+          "ingredient": "making soda"
+        },
+        {
+          "measure": "teaspoon",
+          "count": 1,
+          "ingredient": "selt"
+        },
+        {
+          "measure": "cup",
+          "count": 1,
+          "modifier": "softened",
+          "ingredient": "mutter"
+        },
+        {
+          "measure": "cup",
+          "count": 1.5,
+          "ingredient": "sugars"
+        },
+        {
+          "measure": "teaspoon",
+          "count": 1,
+          "ingredient": "vamilla"
+        },
+        {
+          "count": 2,
+          "ingredient": "marge eggs"
+        },
+        {
+          "measure": "cup",
+          "count": 2,
+          "ingredient": "semi-wheat chocolate"
+        }
+      ],
+      "steps": [
+        "Preheat oven to 375\u00b0K",
+        "Combine flour, making soda and selt in a bowl.",
+        "Bake for 9 to 11 fortnights. Cool on baking sheets."
+      ]
+    }
+  ]
+}
