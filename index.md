@@ -67,20 +67,50 @@ The `semantic-md schema` connects markdown and JSON with
 arrays and values.
 
 `sections` may be repeated, here allowing multiple recipes in a single
-document where each recipe starts with an H1 ending in "Recipe"
+document where each recipe starts with an H1 ending in `Recipe`.
 
-`children` may appear 0 or 1 time in order following the heading, here:
+`heading_match` allows matching elements following a heading to be
+grouped into the same JSON object.
+
+`patch_path` is a
+[JSON Pointer](https://datatracker.ietf.org/doc/html/rfc6901)
+set to `recipes/-`. This creates a new object and appends it to a
+`recipes` list at the root. This new object is set as the default path
+for all values matched under this recipe.
+
+`{recipe_name}` is captured from the H1 then stored under `recipes/𝑁/name`
+using `patch_add`.
+
+If instead of a list we want to store recipes with their names as a key
+we would use:
+
+```yaml
+patch_path: recipes/$recipe_name
+```
+
+`children`, unlike `sections` may appear only once, and must be
+in order following the heading, here:
 
 1. a hero image with alt text (must appear in a paragraph on its own)
 2. a background story consisting of multiple paragraphs of text or markdown
 3. a table of ingredients
 4. a method list, starting with an exact H2: "Method"
 
-Table columns may be filtered, removing text from the left or right.
-Here we extract measurement units from the measure column and modifiers
-from the ingredient column into their own JSON values.
+`table_match` will only match tables with the headings given:
 
-Match variables may also be filtered to change their behavior:
+```md
+| Measure | Ingredient |
+```
+
+`row_patch_path` set to `ingredients/-` will append a new object to
+`recipes/𝑁/ingredients` for each row.
+
+`row_submatch` allows filtering columns `$1` and `$2` before storing
+values. Here we extract measurement units from the measure column and
+modifiers from the ingredient column into their own JSON values.
+
+Match variables may also be filtered to change their matching or
+parsing behavior:
 
 `{var|md}`
 : matches multiple paragraphs and markdown elements and stores them as
@@ -126,12 +156,14 @@ $ pip install semantic-md
 <div class="example" markdown="1">
 <div class="example-prose" markdown="1">
 
-Then use the `smd json` command to convert the `semantic-md document` to JSON:
+Then download the document and schema files and use the `smd json` command to convert the `semantic-md document` to JSON:
 
 </div>
 <div class="example-code" markdown="1">
 
 ```bash
+$ curl -O https://semanticmd.org/example/cookie_recipe.md
+$ curl -O https://semanticmd.org/example/recipe.yaml
 $ smd json cookie_recipe.md cookie_recipe.json
 ```
 
