@@ -3,10 +3,10 @@
 layout: default
 ---
 
+# Semantic Markdown (semantic-md)
+
 <div class="example" markdown="1">
 <div class="example-prose" markdown="1">
-
-# Semantic Markdown (semantic-md)
 
 `semantic-md` defines schemas for converting human-friendly markdown
 documents to machine-readable JSON files.
