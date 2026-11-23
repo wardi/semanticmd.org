@@ -26,6 +26,12 @@ url: "https://semanticmd.org" # the base hostname & protocol for your site, e.g.
 #twitter_username: wardi_
 github_username:  wardi
 
+navigation:
+  - title: Home
+    url: /
+  - title: Example
+    url: /example/
+
 # Build settings
 #theme: minima
 #remote_theme: pages-themes/hacker@v0.2.0

@@ -187,6 +187,26 @@
       margin: 0 auto;
       padding: 1rem 1.25rem 2rem;
     }
+    .site-header {
+      max-width: var(--content-max);
+      margin: 0 auto;
+      padding: 1rem 1.25rem 0;
+    }
+    .site-nav {
+      display: flex;
+      gap: 1.25rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .site-nav a {
+      padding: 0.25rem 0 0.75rem;
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .site-nav a:hover,
+    .site-nav a[aria-current="page"] {
+      text-decoration: underline;
+      text-underline-offset: 0.35rem;
+    }
     #main-container > :is(h1, h2, p, ul, ol, dl, h3) {
       max-width: var(--prose-max);
     }
@@ -312,6 +332,13 @@
   </style>
 </head>
 <body>
+  <header class="site-header">
+    <nav class="site-nav" aria-label="Main navigation">
+      {% for item in site.navigation %}
+        <a href="{{ item.url | relative_url }}"{% if page.url == item.url %} aria-current="page"{% endif %}>{{ item.title }}</a>
+      {% endfor %}
+    </nav>
+  </header>
   <div class="container" id="main-container">
     {{ content }}
   </div>
