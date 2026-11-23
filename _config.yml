@@ -31,6 +31,8 @@ navigation:
     url: /
   - title: Example
     url: /example/
+  - title: Documentation
+    url: /docs/
 
 # Build settings
 #theme: minima

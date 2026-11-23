@@ -21,4 +21,4 @@ Project home page
 : <https://github.com/semantic-md/semantic-md>
 
 Documentation
-: coming soon
+: [Schema directive reference]({{ '/docs/' | relative_url }})
