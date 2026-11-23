@@ -4,7 +4,7 @@ title: Documentation
 permalink: /docs/
 ---
 
-# Schema directive reference
+# Documentation
 
 Semantic Markdown uses a YAML schema to match Markdown blocks and build a JSON
 object. This reference describes the current implementation.
@@ -24,7 +24,7 @@ semantic-md: recipe.yaml
 By default, the `smd json` command looks for the schema relative to the input
 document. Use `-s SCHEMA` to specify a schema instead, or `-d DIR` to allow
 schemas under a particular directory. The command still expects YAML front
-matter when `-s` is used. HTTP schema loading is not implemented.
+matter when `-s` is used.
 
 ```bash
 smd json recipe.md recipe.json
@@ -218,22 +218,50 @@ patch_add:
 
 ## Capture filters
 
-Use `{name|filter}` in a pattern. The implemented filters are:
+Use `{name|filter}` in a pattern. Ordinary captures produce strings; the
+implemented filters change what is captured or how it is parsed.
 
-| Filter | Usage | Result |
-| --- | --- | --- |
-| `md` | A paragraph containing only `{name|md}` in a block `match` | A Markdown string containing consecutive supported non-heading blocks, including paragraphs, lists, quotes and code blocks. |
-| `list` | A single list item containing only `{name|list}`, for example `- {name|list}` or `1. {name|list}` | A list of Markdown strings, one per item. |
-| `mixed_fraction` | A text capture such as `{amount|mixed_fraction}` | A number parsed from an integer, fraction, or mixed fraction, such as `2`, `1/2`, or `2 1/4`. Invalid input fails conversion. |
+### `md`
 
-`md` and `list` have special structural meanings, so use them in the forms
-shown above rather than embedding them in other text. Ordinary captures produce
-strings; `mixed_fraction` is a proof-of-concept numeric filter.
-Currently, an `md` capture at the end of a document can leave its last block
-unmatched and cause conversion to fail. Place a following heading or another
-non-`md` block after the captured content.
+Use `{name|md}` as a paragraph on its own in a block `match`. It captures
+consecutive supported non-heading blocks, including paragraphs, lists, quotes,
+and code blocks, as a Markdown string.
 
-## Version metadata
+```yaml
+match: "{description|md}"
+patch_add:
+  description: $description
+```
 
-Some schemas contain `semantic-md-version: 0`. The current parser does not
-read or enforce this field; it is not a version compatibility check.
+### `list`
+
+Use `{name|list}` as the only content of a single list item in a block `match`.
+It captures the list as an array of Markdown strings, one per item. For example:
+
+```yaml
+match: |
+  ## Method
+
+  1. {steps|list}
+patch_add:
+  steps: $steps
+```
+
+The Markdown `1. Mix` followed by `2. Bake` under the Method heading produces
+`"steps": ["Mix", "Bake"]`. An unordered list pattern such as
+`- {steps|list}` can also be used.
+
+### `mixed_fraction`
+
+Use `{name|mixed_fraction}` in a text capture to convert an integer, fraction,
+or mixed fraction to a number. This filter is a proof of concept; invalid input
+does not match, so later rules can be tried. If no rule matches, conversion
+fails with an unmatched block error; an unmatched table submatch is skipped.
+
+```yaml
+match: "{amount|mixed_fraction}"
+patch_add:
+  count: $amount
+```
+
+For example, `2 1/4` produces `"count": 2.25`; `2` and `1/2` also work.
