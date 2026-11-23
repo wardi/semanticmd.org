@@ -19,6 +19,3 @@ time.
 
 Project home page
 : <https://github.com/semantic-md/semantic-md>
-
-Documentation
-: [Schema directive reference]({{ '/docs/' | relative_url }})

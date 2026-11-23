@@ -7,7 +7,7 @@ permalink: /docs/
 # Schema directive reference
 
 Semantic Markdown uses a YAML schema to match Markdown blocks and build a JSON
-object. This reference describes the current implementation, version 0.0.2.
+object. This reference describes the current implementation.
 For a complete working schema and document, see the
 [recipe example]({{ '/example/' | relative_url }}).
 
@@ -46,10 +46,6 @@ block causes conversion to fail.
   The nested scope ends when a heading at the same or a higher level is
   encountered. Headings that open scopes must progress one level at a time.
 
-The current implementation requires every `heading_match` to have a nonempty
-`children` list, even if its children are omitted from a particular document.
-Omitting the list or using an empty list causes conversion to fail.
-
 ```yaml
 sections:
   - heading_match: "# Item {id}"
@@ -83,9 +79,8 @@ children:
 ```
 
 Capture names use lowercase letters, digits, and underscores. Whitespace
-around the name and filter is allowed. Literal text matching is currently
-prefix-based rather than an exact full-string comparison; do not rely on it
-to reject trailing text.
+around the name and filter is allowed. The pattern must match the entire text
+node or image URL, including any literal text before and after a capture.
 
 ### `heading_match`
 
@@ -94,10 +89,9 @@ It can have `patch_path`, `patch_add`, `children`, and `sections`. Its captures
 can be used in its path and patch. Each scope has its own ordered children and
 repeating sections, and nested paths are relative to the enclosing scope.
 
-Use the appropriate heading level in the pattern and document; the current
-implementation requires nested scope headings to advance one level at a time.
-Do not rely on the matcher to reject a heading solely because its level differs
-from the pattern.
+The heading level must match the pattern. Nested scope headings must advance
+one level at a time. Headings in ordinary `match` patterns must also match
+their specified level.
 
 ### `table_match`
 
@@ -113,18 +107,15 @@ children:
       columns/$1/label: $2
 ```
 
-**Current limitation:** the implementation checks the number of columns but
-does not reliably reject tables with different header text. Use distinct table
-shapes and rule ordering rather than relying on header names for validation.
+The number and text of the column headings must match the pattern.
 
 ## JSON output directives
 
 Paths are relative to the current scope and use
 [JSON Pointer](https://datatracker.ietf.org/doc/html/rfc6901) segments, without
 a leading slash. Missing intermediate objects are created. A trailing `/-`
-appends to an array. Captured values substituted into paths are not
-automatically escaped as JSON Pointer segments; avoid `/` and `~` in those
-values.
+appends to an array. Captured values substituted into paths have `/` and `~`
+escaped as JSON Pointer characters, so they remain within their path segment.
 
 ### `patch_path`
 
