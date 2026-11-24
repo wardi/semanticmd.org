@@ -1,0 +1,11 @@
+---
+layout: default
+---
+{% assign docs_parts = content | split: '<!-- end-docs-toc -->' %}
+<div class="docs-layout">
+  {{ docs_parts[0] }}
+  <main class="docs-content">
+    {{ docs_parts[1] }}
+  </main>
+</div>
+<script src="{{ '/assets/js/docs-toc.js' | relative_url }}" defer></script>
