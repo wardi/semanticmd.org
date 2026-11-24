@@ -195,3 +195,24 @@ Method steps are stored as a list of strings in `steps`.
 
 </div>
 </div>
+
+<div class="example" markdown="1">
+<div class="example-prose" markdown="1">
+
+The same schema can render the JSON back to Markdown with `smd md`. The schema
+is required with `--schema`; the generated Markdown includes front matter
+linking to it and can be converted back to JSON.
+
+This creates a valid Markdown representation of the JSON, though it may not
+reproduce the original formatting exactly.
+
+</div>
+<div class="example-code" markdown="1">
+
+```bash
+$ curl -O https://semanticmd.org/example/cookie_recipe.json
+$ smd md cookie_recipe.json cookie_recipe.generated.md --schema recipe.yaml
+```
+
+</div>
+</div>

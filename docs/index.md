@@ -1,17 +1,26 @@
 ---
-layout: default
+layout: documentation
 title: Documentation
 permalink: /docs/
 ---
 
+<nav class="docs-toc" aria-label="On this page" markdown="1">
+**On this page**
+
+* Contents
+{:toc}
+</nav>
+<!-- end-docs-toc -->
+
 # Documentation
+{: .no_toc}
 
 Semantic Markdown uses a YAML schema to match Markdown blocks and build a JSON
 object. This reference describes the current implementation.
 For a complete working schema and document, see the
 [recipe example]({{ '/example/' | relative_url }}).
 
-## Using a schema
+## Converting Markdown to JSON
 
 Put a `semantic-md` entry in the document's YAML front matter:
 
@@ -29,6 +38,30 @@ matter when `-s` is used.
 ```bash
 smd json recipe.md recipe.json
 ```
+
+## Converting JSON to Markdown
+
+Use `smd md` to render JSON as Markdown with a schema. Unlike `smd json`, this
+command requires the schema to be provided with `-s` (or `--schema`):
+
+```bash
+smd md recipe.json recipe.md --schema recipe.yaml
+```
+
+The generated Markdown includes YAML front matter pointing to the schema, so it
+can be converted back with `smd json`. For a file destination, the schema
+reference is relative to that Markdown file; when writing to standard output, it
+is an absolute path.
+
+The renderer uses the schema's matching patterns and JSON patch directives to
+build the Markdown, then converts the result back to JSON to verify that it
+matches the input. Plain text inserted into patterns is escaped. Values captured
+with `|md` or `|list`, and values rendered directly into table cells, are treated
+as Markdown. Not every JSON value or schema can be rendered, and a schema may
+discard source formatting or choose a canonical representation. The generated
+Markdown is therefore a valid representation, but is not necessarily identical
+to the original document; conversion reports an error if it cannot produce a
+Markdown document that passes the JSON check.
 
 The schema's top level may contain `children` and `sections`, each a list of
 rules. A rule has one of `match`, `heading_match`, or `table_match`; each

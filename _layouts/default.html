@@ -207,11 +207,72 @@
       text-decoration: underline;
       text-underline-offset: 0.35rem;
     }
-    #main-container > :is(h1, h2, p, ul, ol, dl, h3) {
+    :is(#main-container, .docs-content) > :is(h1, h2, p, ul, ol, dl, h3) {
       max-width: var(--prose-max);
     }
-    #main-container > div.highlighter-rouge {
+    :is(#main-container, .docs-content) > div.highlighter-rouge {
       max-width: min(100%, 52rem);
+    }
+    .docs-layout {
+      display: grid;
+      gap: 1.5rem;
+    }
+    .docs-content {
+      min-width: 0;
+    }
+    .docs-toc {
+      padding: 1rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--bg);
+      font-size: 0.9rem;
+    }
+    .docs-toc > p {
+      margin: 0 0 0.5rem;
+    }
+    .docs-toc ul {
+      list-style: none;
+      margin: 0;
+      padding-left: 0.85rem;
+    }
+    .docs-toc > ul {
+      max-height: 18rem;
+      overflow-y: auto;
+      padding-left: 0;
+    }
+    .docs-toc a {
+      display: block;
+      padding: 0.2rem 0.5rem;
+      border-left: 2px solid transparent;
+      color: var(--text-secondary);
+      text-decoration: none;
+    }
+    .docs-toc a code.highlighter-rouge {
+      color: inherit;
+      font-size: inherit;
+    }
+    .docs-toc a:hover {
+      color: var(--function);
+      text-decoration: underline;
+    }
+    .docs-toc a[aria-current="location"] {
+      border-left-color: var(--function);
+      color: var(--function);
+      font-weight: 700;
+    }
+    @media (min-width: 960px) {
+      .docs-layout {
+        grid-template-columns: 15rem minmax(0, 1fr);
+        align-items: start;
+        gap: 2rem;
+      }
+      .docs-toc {
+        position: sticky;
+        top: 1rem;
+      }
+      .docs-toc > ul {
+        max-height: calc(100vh - 5.5rem);
+      }
     }
     .example {
       display: flex;

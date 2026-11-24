@@ -5,8 +5,8 @@ layout: default
 
 # Semantic Markdown (semantic-md)
 
-`semantic-md` defines schemas for converting human-friendly markdown
-documents to machine-readable JSON files.
+`semantic-md` defines schemas for converting between human-friendly Markdown
+documents and machine-readable JSON files.
 
 A `semantic-md document` is a markdown file with a link
 to its `semantic-md schema`. The document may include any markdown text or
