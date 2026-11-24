@@ -220,6 +220,28 @@
     .docs-content {
       min-width: 0;
     }
+    .docs-content :is(h2, h3) {
+      scroll-margin-top: 1.5rem;
+    }
+    .docs-content .toc-target-flash {
+      background-color: rgba(102, 126, 234, 0.4);
+      box-shadow: -0.4rem 0 0 var(--accent);
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      .docs-content .toc-target-flash {
+        animation: toc-target-flash 1.4s ease-out;
+      }
+      @keyframes toc-target-flash {
+        0%, 40%, 65%, 80% {
+          background-color: rgba(102, 126, 234, 0.4);
+          box-shadow: -0.4rem 0 0 var(--accent);
+        }
+        50%, 100% {
+          background-color: transparent;
+          box-shadow: none;
+        }
+      }
+    }
     .docs-toc {
       padding: 1rem;
       border: 1px solid var(--border);
@@ -240,6 +262,12 @@
       overflow-y: auto;
       padding-left: 0;
     }
+    .docs-toc ul ul {
+      padding-left: 0;
+    }
+    .docs-toc ul ul a {
+      padding-left: 1.35rem;
+    }
     .docs-toc a {
       display: block;
       padding: 0.2rem 0.5rem;
@@ -255,10 +283,8 @@
       color: var(--function);
       text-decoration: underline;
     }
-    .docs-toc a[aria-current="location"] {
+    .docs-toc a.is-visible {
       border-left-color: var(--function);
-      color: var(--function);
-      font-weight: 700;
     }
     @media (min-width: 960px) {
       .docs-layout {
