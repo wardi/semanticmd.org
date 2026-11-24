@@ -17,5 +17,9 @@ structures to JSON objects, arrays and values. Schemas may be
 reused across many documents and versioned, adapting to changes over
 time.
 
+See the [example]({{ '/example/' | relative_url }}) for a working recipe
+schema and document, or explore the [documentation]({{ '/docs/' | relative_url }})
+for the schema reference and conversion commands.
+
 Project home page
 : <https://github.com/semantic-md/semantic-md>

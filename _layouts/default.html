@@ -176,6 +176,9 @@
     }
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
       margin: 0;
       padding: 0;
       background-color: var(--bg-secondary);
@@ -183,12 +186,16 @@
       overflow-x: hidden;
     }
     .container {
-      max-width: var(--content-max);
+      box-sizing: border-box;
+      width: 100%;
+      max-width: calc(var(--content-max) + 2.5rem);
       margin: 0 auto;
       padding: 1rem 1.25rem 2rem;
     }
     .site-header {
-      max-width: var(--content-max);
+      box-sizing: border-box;
+      width: 100%;
+      max-width: calc(var(--content-max) + 2.5rem);
       margin: 0 auto;
       padding: 1rem 1.25rem 0;
     }
@@ -403,7 +410,16 @@
       font-family: var(--font-display);
     }
     footer {
-      margin-bottom: 1rem;
+      box-sizing: border-box;
+      font-size: 0.75rem;
+      width: 100%;
+      max-width: calc(var(--content-max) + 2.5rem);
+      margin: auto auto 0;
+      padding: 0 1.25rem 1rem;
+    }
+    footer > div {
+      border-top: 1px solid var(--border);
+      padding-top: 1rem;
     }
     footer div {
       display: flex;

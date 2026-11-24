@@ -32,8 +32,7 @@ semantic-md: recipe.yaml
 
 By default, the `smd json` command looks for the schema relative to the input
 document. Use `-s SCHEMA` to specify a schema instead, or `-d DIR` to allow
-schemas under a particular directory. The command still expects YAML front
-matter when `-s` is used.
+schemas under a particular directory.
 
 ```bash
 smd json recipe.md recipe.json
